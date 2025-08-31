@@ -1,0 +1,15 @@
+precision highp float;
+uniform float uTime;
+uniform float uStripeFreq;
+uniform float uSpeed;
+varying vec2 vUv;
+
+float stripeValue(vec2 uv, float freq, float t) {
+    float phase = fract(uv.y * freq - t);   // minus → top→bottom
+    return step(phase, 0.5);
+}
+
+void main() {
+    float c = stripeValue(vUv, uStripeFreq, uTime * uSpeed);
+    gl_FragColor = vec4(vec3(c), 1.0);
+}

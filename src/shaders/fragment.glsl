@@ -7,6 +7,12 @@ uniform sampler2D uSDFTex;  // single-channel SDF (R): 1.0 inside, ~0.5 at edge
 uniform float uZoom;        // max zoom amount in [0, 1). e.g. 0.3 → up to 30% zoom
 uniform vec2 uCenter;      // lens center in UV coords (e.g. vec2(0.5, 0.5) on the quad)
 uniform float uCurve;       // shaping exponent for the inside ramp (e.g. 0.8)
+uniform float uTime;
+
+float stripeValue(vec2 uv, float freq, float t) {
+    float phase = fract(uv.y * freq + t); // sign changes the direction
+    return step(phase, 0.5);
+}
 
 void main() {
     // Build anti-aliased mask from SDF
@@ -31,9 +37,15 @@ void main() {
     vec2 uvZoomed = uCenter + delta * scale;
 
     // Sample background; composite with mask
-    vec3 bg0 = texture2D(uBgTex, vUv).rgb;        // unmodified background
-    vec3 bgZ = texture2D(uBgTex, uvZoomed).rgb;   // magnified sample (stays "behind" the logo)
+    //vec3 bg0 = texture2D(uBgTex, vUv).rgb;        // unmodified background
+    //vec3 bgZ = texture2D(uBgTex, uvZoomed).rgb;   // magnified sample (stays "behind" the logo)
+
+    // Use the stripes as the background texture
+    vec3 bg0 = vec3(stripeValue(vUv, 2.0, uTime * 0.1));
+    vec3 bgZ = vec3(stripeValue(uvZoomed, 2.0, uTime * 0.1));
+
     vec3 color = mix(bg0, bgZ, mask);
     gl_FragColor = vec4(color, 1.0);
     //gl_FragColor = vec4(vec3(d), 1.0);
+    //gl_FragColor = vec4(vec3(stripeValue(vUv, 20.0, uTime * 1.0)), 1.0);
 }

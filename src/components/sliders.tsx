@@ -2,10 +2,10 @@
 import { useState, createContext, useContext } from "react";
 
 const sldrs = [
-    { label: 'maxDistance', min: 0, max: 100, step: 1, initialValue: 100 },
+    { label: 'maxDistance', min: 0, max: 1000, step: 1, initialValue: 451 },
     { label: 'exponent', min: 0, max: 10, step: 0.01, initialValue: 10 },
     { label: 'curve', min: 0, max: 3, step: 0.01, initialValue: 0.36 },
-    { label: 'zoom', min: 0, max: 1, step: 0.001, initialValue: 1 }
+    { label: 'zoom', min: 0, max: 1, step: 0.001, initialValue: 0.7 }
 ] as const
 
 type SldrsLabel = typeof sldrs[number]['label']

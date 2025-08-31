@@ -24,9 +24,9 @@ export function useSdfTexture({
     exponent = 1,
 }: Args) {
     return useMemo(() => {
-        const svg = new SVGPathCommander(pathD);
-        svg.normalize();
-        svg.flipY();
+        const svg = new SVGPathCommander(pathD)
+            .flipY()
+            .normalize();
 
         const bbox = svg.bbox; // { x, y, width, height }
         const cleanPathD = svg.toString();
