@@ -12,7 +12,7 @@ import { useFrame } from "@react-three/fiber";
 export function LiquidGlassShader() {
     const bgTex = useTexture("/forest.jpg");
 
-    const { maxDistance, exponent, curve, zoom } = useSlidersValues();
+    const { maxDistance, exponent, curve, zoom, frequency, speed } = useSlidersValues();
 
     const {
         texture: sdfTex,
@@ -50,6 +50,8 @@ export function LiquidGlassShader() {
         uSdfTexSize: { value: sdfSize },
         uCurve: { value: curve },
         uZoom: { value: zoom },
+        uFrequency: { value: frequency },
+        uSpeed: { value: speed },
         uCenter: { value: center },
         uTime: { value: 0 },
         // 4-stop colormap defaults (edit as you like)
@@ -74,6 +76,8 @@ export function LiquidGlassShader() {
             uniforms-uSdfTexSize-value={sdfSize}
             uniforms-uCurve-value={curve}
             uniforms-uZoom-value={zoom}
+            uniforms-uFrequency-value={frequency}
+            uniforms-uSpeed-value={speed}
             uniforms-uCenter-value={center}
             uniforms-uTime-value={uniforms.uTime.value}
             uniforms-uC0-value={uniforms.uC0.value}

@@ -5,7 +5,9 @@ const sldrs = [
     { label: 'maxDistance', min: 0, max: 1000, step: 1, initialValue: 451 },
     { label: 'exponent', min: 0, max: 10, step: 0.01, initialValue: 10 },
     { label: 'curve', min: 0, max: 3, step: 0.01, initialValue: 0.36 },
-    { label: 'zoom', min: 0, max: 1, step: 0.001, initialValue: 0.7 }
+    { label: 'zoom', min: 0, max: 1, step: 0.001, initialValue: 0.7 },
+    { label: 'frequency', min: 0, max: 20, step: 0.1, initialValue: 2 },
+    { label: 'speed', min: -2, max: 2, step: 0.01, initialValue: 0.1 },
 ] as const
 
 type SldrsLabel = typeof sldrs[number]['label']
@@ -86,7 +88,7 @@ function Slider({ label, min, max, step, value, onChange }: SliderProps) {
                 onChange={(e) => onChange(Number(e.target.value))}
             />
             <label className="mx-3">{label}</label>
-            <span>{value}</span>
+            <span className='font-mono text-sm opacity-50'>{value}</span>
         </div>
     );
 }

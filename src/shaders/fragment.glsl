@@ -8,6 +8,8 @@ uniform float uZoom;        // max zoom amount in [0, 1). e.g. 0.3 → up to 30%
 uniform vec2 uCenter;      // lens center in UV coords (e.g. vec2(0.5, 0.5) on the quad)
 uniform float uCurve;       // shaping exponent for the inside ramp (e.g. 0.8)
 uniform float uTime;
+uniform float uFrequency;   // stripe frequency (periods across V)
+uniform float uSpeed;       // stripe scroll speed (sign controls direction)
 // 4-color colormap endpoints (0.0, ~0.33, ~0.66, 1.0)
 uniform vec3 uC0;
 uniform vec3 uC1;
@@ -62,7 +64,7 @@ void main() {
 
     // Colormap applied everywhere: background as shade 0.0, inside uses stripe shade
     vec3 bg0 = colormap4(0.0, uC0, uC1, uC2, uC3);
-    float shadeZ = stripeValue(uvZoomed, 2.0, uTime * 0.1);
+    float shadeZ = stripeValue(uvZoomed, uFrequency, uTime * uSpeed);
     vec3 bgZ = colormap4(shadeZ, uC0, uC1, uC2, uC3);
 
     // Composite
