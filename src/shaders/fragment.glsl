@@ -37,7 +37,7 @@ vec3 colormap4(float t, vec3 c0, vec3 c1, vec3 c2, vec3 c3) {
 void main() {
     // Build anti-aliased mask from SDF
     float d = texture2D(uSDFTex, vUv).r;             // 1.0 deep inside, ~0.5 edge, <0.5 outside
-    float w = fwidth(d);
+    float w = fwidth(d) + 0.02;
     float mask = smoothstep(0.5 - w, 0.5 + w, d);    // 0 outside → 1 inside
 
     // 0 at edge → 1 at deep interior
