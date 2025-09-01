@@ -1,5 +1,6 @@
 "use client"
 import { useState, createContext, useContext } from "react";
+import { Slider as ShadSlider } from "./ui/slider";
 
 const sldrs = [
     { label: 'maxDistance', min: 0, max: 1000, step: 1, initialValue: 451 },
@@ -78,14 +79,22 @@ type SliderProps = {
 
 function Slider({ label, min, max, step, value, onChange }: SliderProps) {
     return (
-        <div>
-            <input
+        <div className="flex items-center">
+            {/* <input
                 type="range"
                 min={min}
                 max={max}
                 step={step}
                 value={value}
                 onChange={(e) => onChange(Number(e.target.value))}
+            /> */}
+            <ShadSlider
+                min={min}
+                max={max}
+                step={step}
+                value={[value]}
+                onValueChange={([value]) => onChange(value)}
+                className="w-[100px]"
             />
             <label className="mx-3">{label}</label>
             <span className='font-mono text-sm opacity-50'>{value}</span>

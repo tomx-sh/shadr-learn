@@ -9,7 +9,7 @@ export function SlidersPopover({ children }: { children: React.ReactNode }) {
             <PopoverTrigger asChild>
                 <Button size='icon' variant='outline' className='rounded-full absolute bottom-2 left-2'><Settings /></Button>
             </PopoverTrigger>
-            <PopoverContent className="m-2 w-[350px] bg-transparent backdrop-blur-2xl">
+            <PopoverContent className="m-2 w-[300px] bg-transparent backdrop-blur-2xl">
                 {children}
             </PopoverContent>
         </Popover>
