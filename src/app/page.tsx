@@ -5,7 +5,7 @@ import { SldrsCtxProvider } from "@/components/sliders";
 export default function Home() {
     return (
         <SldrsCtxProvider>
-            <main className="h-screen w-screen bg-[#011318] flex flex-col items-center justify-center">
+            <main className="h-screen w-screen flex flex-col items-center justify-center">
                 <ThreeCanvas />
                 {/* <Sliders /> */}
             </main>
