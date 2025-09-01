@@ -52,6 +52,11 @@ export function LiquidGlassShader() {
         uZoom: { value: zoom },
         uCenter: { value: center },
         uTime: { value: 0 },
+        // 4-stop colormap defaults (edit as you like)
+        uC0: { value: new THREE.Color(0x084F57).toArray().slice(0, 3) }, // slate-800
+        uC1: { value: new THREE.Color(0x243038).toArray().slice(0, 3) }, // blue-500
+        uC2: { value: new THREE.Color(0xFF5C05).toArray().slice(0, 3) }, // green-500
+        uC3: { value: new THREE.Color(0xFFFF00).toArray().slice(0, 3) }, // amber-500
     }), []);
 
     useFrame((state) => {
@@ -70,6 +75,10 @@ export function LiquidGlassShader() {
             uniforms-uZoom-value={zoom}
             uniforms-uCenter-value={center}
             uniforms-uTime-value={uniforms.uTime.value}
+            uniforms-uC0-value={uniforms.uC0.value}
+            uniforms-uC1-value={uniforms.uC1.value}
+            uniforms-uC2-value={uniforms.uC2.value}
+            uniforms-uC3-value={uniforms.uC3.value}
             transparent={true}
             depthTest={false}
         />

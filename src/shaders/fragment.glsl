@@ -8,10 +8,30 @@ uniform float uZoom;        // max zoom amount in [0, 1). e.g. 0.3 → up to 30%
 uniform vec2 uCenter;      // lens center in UV coords (e.g. vec2(0.5, 0.5) on the quad)
 uniform float uCurve;       // shaping exponent for the inside ramp (e.g. 0.8)
 uniform float uTime;
+// 4-color colormap endpoints (0.0, ~0.33, ~0.66, 1.0)
+uniform vec3 uC0;
+uniform vec3 uC1;
+uniform vec3 uC2;
+uniform vec3 uC3;
 
 float stripeValue(vec2 uv, float freq, float t) {
-    float phase = fract(uv.y * freq + t); // sign changes the direction
-    return step(phase, 0.5);
+    // Smooth periodic stripes in [0,1] using a cosine wave
+    // 0.0 → 1.0 → 0.0 fade across each period; sign of t controls direction
+    float x = uv.y * freq + t;
+    return 0.5 + 0.5 * cos(6.28318530718 * x); // 2*pi = 6.283185...
+}
+
+// Piecewise-linear 4-stop colormap over t∈[0,1]
+vec3 colormap4(float t, vec3 c0, vec3 c1, vec3 c2, vec3 c3) {
+    t = clamp(t, 0.0, 1.0);
+    float seg = t * 3.0; // three segments: [0,1), [1,2), [2,3]
+    if(seg < 1.0) {
+        return mix(c0, c1, seg);
+    } else if(seg < 2.0) {
+        return mix(c1, c2, seg - 1.0);
+    } else {
+        return mix(c2, c3, seg - 2.0);
+    }
 }
 
 void main() {
@@ -40,10 +60,12 @@ void main() {
     //vec3 bg0 = texture2D(uBgTex, vUv).rgb;        // unmodified background
     //vec3 bgZ = texture2D(uBgTex, uvZoomed).rgb;   // magnified sample (stays "behind" the logo)
 
-    // Use the stripes as the background texture
-    vec3 bg0 = vec3(stripeValue(vUv, 2.0, uTime * 0.1));
-    vec3 bgZ = vec3(stripeValue(uvZoomed, 2.0, uTime * 0.1));
+    // Colormap applied everywhere: background as shade 0.0, inside uses stripe shade
+    vec3 bg0 = colormap4(0.0, uC0, uC1, uC2, uC3);
+    float shadeZ = stripeValue(uvZoomed, 2.0, uTime * 0.1);
+    vec3 bgZ = colormap4(shadeZ, uC0, uC1, uC2, uC3);
 
+    // Composite
     vec3 color = mix(bg0, bgZ, mask);
     gl_FragColor = vec4(color, 1.0);
     //gl_FragColor = vec4(vec3(d), 1.0);
