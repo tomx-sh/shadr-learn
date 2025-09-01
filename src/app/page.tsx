@@ -1,14 +1,13 @@
 import ThreeCanvas from "@/components/three-canvas";
-import { Sliders } from "@/components/sliders";
+//import { Sliders } from "@/components/sliders";
 import { SldrsCtxProvider } from "@/components/sliders";
 
 export default function Home() {
     return (
         <SldrsCtxProvider>
-            <main>
-                <h1>Hello</h1>
+            <main className="h-screen w-screen bg-[#011318] flex flex-col items-center justify-center">
                 <ThreeCanvas />
-                <Sliders />
+                {/* <Sliders /> */}
             </main>
         </SldrsCtxProvider>
     );

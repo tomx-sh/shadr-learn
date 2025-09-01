@@ -6,6 +6,7 @@ import { LiquidGlassShader } from "./liquid-glass-shader";
 export default function ThreeCanvas() {
     return (
         <Canvas
+            //className="shrink-0"
             style={{ width: 512, height: 512, background: "black" }}
             gl={{ antialias: true }}
             dpr={2}

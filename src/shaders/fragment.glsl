@@ -38,7 +38,7 @@ void main() {
     // Build anti-aliased mask from SDF
     float d = texture2D(uSDFTex, vUv).r;             // 1.0 deep inside, ~0.5 edge, <0.5 outside
     float w = fwidth(d) + 0.02;
-    float mask = smoothstep(0.5 - w, 0.5 + w, d);    // 0 outside → 1 inside
+    float mask = smoothstep(0.48 - w, 0.5 + w, d);    // 0 outside → 1 inside
 
     // 0 at edge → 1 at deep interior
     // This remap does not depend on generator maxDistance.
